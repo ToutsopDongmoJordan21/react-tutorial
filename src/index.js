@@ -6,6 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 
 class App extends React.Component {
+
+  clientInput = React.createRef();
+
   state = {
     clients: [
       {id: 1, nom: "Toutsop Jordan"},
@@ -21,6 +24,12 @@ class App extends React.Component {
     client.push({id: 5, nom: "toto"});
     
     this.setState({clients: client});
+  }
+
+  HandleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log(this.clientInput.current.value);
   }
 
   HandleDelete = id => {
@@ -44,8 +53,8 @@ class App extends React.Component {
                               <button onClick={this.HandlerClick}>+</button></li>
               ))}
         </ul>
-        <form>
-          <input type="text" placeholder="Ajouter un client"/>
+        <form onSubmit = {this.HandleSubmit}>
+          <input type="text" ref={this.clientInput} placeholder="Ajouter un client"/>
           <button>Confirmer</button>
         </form>
       </div>
