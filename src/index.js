@@ -4,6 +4,7 @@ import './index.css';
 //import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Client from './Client';
+import ClientForm from './ClientForm';
 
 
 class App extends React.Component {
@@ -14,8 +15,7 @@ class App extends React.Component {
       {id: 2, nom: "Yvan barrela"},
       {id: 3, nom: "Mauricio Hilton"},
       {id: 4, nom: "Armand Lamela"},
-    ],
-    nouveauClient: ''
+    ]
   };
 
 
@@ -24,23 +24,6 @@ class App extends React.Component {
     client.push({id: 5, nom: "toto"});
     
     this.setState({clients: client});
-  }
-
-  HandleSubmit = (event) => {
-    event.preventDefault();
-
-    const id = new Date().getTime();
-    const nom = this.state.nouveauClient;
-
-    const clients = [...this.state.clients];
-    clients.push({ id,nom});
-
-    this.setState({clients, nouveauClient: ''});
-    console.log('l\' heure es :' +id);
-  }
-
-  HandleAdd = (event) => {
-    this.setState({nouveauClient: event.currentTarget.value});
   }
 
   HandleDelete = id => {
@@ -53,6 +36,14 @@ class App extends React.Component {
     console.log('le id supprimé es:' +id)
   };
 
+  HandleAJout = client => {
+    const clients = [...this.state.clients];
+    clients.push({ client});
+
+    this.setState({clients});
+    console.log('l\' heure es :' +client);
+  }
+
   render() {
     const title = "Liste des client";
     return (
@@ -63,10 +54,7 @@ class App extends React.Component {
             <Client details={client} onDelete={this.HandleDelete} onAdd={this.HandlerClick}/>
               ))}
         </ul>
-        <form onSubmit = {this.HandleSubmit}>
-          <input type="text" value={this.state.nouveauClient} onChange={this.HandleAdd} placeholder="Ajouter un client"/>
-          <button>Confirmer</button>
-        </form>
+          <ClientForm onHandleAdd={this.HandleAJout}/>
       </div>
     );
   }
